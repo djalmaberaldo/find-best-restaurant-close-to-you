@@ -1,0 +1,38 @@
+[
+  {
+    "restaurantName": "Chinese restaurant",
+    "rating": 5,
+    "distance": 100,
+    "cuisineName": "Chinese",
+    "priceSinglePersonSpent": 100
+  },
+  {
+    "restaurantName": "Japanese restaurant",
+    "rating": 5,
+    "distance": 100,
+    "cuisineName": "Japanese",
+    "priceSinglePersonSpent": 100
+  },
+  {
+    "restaurantName": "German restaurant",
+    "rating": 5,
+    "distance": 100,
+    "cuisineName": "German",
+    "priceSinglePersonSpent": 100
+  },
+  {
+    "restaurantName": "French restaurant",
+    "rating": 5,
+    "distance": 100,
+    "cuisineName": "French",
+    "priceSinglePersonSpent": 100
+  },
+  {
+    "restaurantName": "Italian restaurant",
+    "rating": 5,
+    "distance": 90,
+    "cuisineName": "Italian",
+    "priceSinglePersonSpent": 100
+  }
+]
+
