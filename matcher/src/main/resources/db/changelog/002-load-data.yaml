@@ -1,0 +1,23 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 003-load-cuisines
+      author: djalma
+      changes:
+        - loadData:
+            file: db/data/cuisines.csv
+            tableName: cuisines
+            separator: ","
+            quotchar: '"'
+            encoding: UTF-8
+
+  - changeSet:
+      id: 004-load-restaurants
+      author: djalma
+      changes:
+        - loadData:
+            file: db/data/restaurants.csv
+            tableName: restaurants
+            separator: ","
+            quotchar: '"'
+            encoding: UTF-8
