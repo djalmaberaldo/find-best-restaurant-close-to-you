@@ -61,7 +61,7 @@ class MatcherControllerTest {
     @Test
     void shouldReturnAllRestaurantsPartialRestaurantNameEquals() throws Exception {
         mockMvc.perform(get("/api/restaurants")
-                        .param("name", "Delicious")
+                        .param("restaurantName", "Delicious")
                         .with(user("test")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(5))
@@ -111,7 +111,6 @@ class MatcherControllerTest {
                         .with(user("test")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(lessThanOrEqualTo(0)));
-
     }
 
 }
