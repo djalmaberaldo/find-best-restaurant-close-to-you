@@ -1,4 +1,4 @@
-package com.assessment.matcher.domain.parameters;
+package com.assessment.matcher.filters;
 
 import com.assessment.matcher.domain.dto.RestaurantDTO;
 import java.util.Comparator;
@@ -33,7 +33,11 @@ public enum FilterLogic {
         this.comparator = comparator;
     }
 
-    public Predicate<RestaurantDTO> build(Object value) {
+    public Predicate<RestaurantDTO> build(String value) {
+        return r -> predicate.test(r, value);
+    }
+
+    public Predicate<RestaurantDTO> build(Integer value) {
         return r -> predicate.test(r, value);
     }
 

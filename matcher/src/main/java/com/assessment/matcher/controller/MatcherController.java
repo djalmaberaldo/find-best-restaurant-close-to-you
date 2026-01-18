@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -21,9 +22,8 @@ public class MatcherController {
     }
 
     @GetMapping("/restaurants")
-    public List<RestaurantDTO> find(RequestDTO requestDTO){
+    public List<RestaurantDTO> find(@Valid RequestDTO requestDTO){
         log.info("Received request: {}", requestDTO);
-
 
         return matcherService.findBestRestaurants(requestDTO);
     }

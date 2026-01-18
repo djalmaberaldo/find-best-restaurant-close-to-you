@@ -24,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class MatcherControllerTest {
 
     protected static final String API_ENDPOINT = "/api/restaurants";
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -112,6 +113,38 @@ class MatcherControllerTest {
                         .with(user("test")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(lessThanOrEqualTo(0)));
+    }
+
+    @Test
+    void shouldFailBigDistance() throws Exception {
+        mockMvc.perform(get(API_ENDPOINT)
+                        .param("distance", "30")
+                        .with(user("test")))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void shouldFailShortDistance() throws Exception {
+        mockMvc.perform(get(API_ENDPOINT)
+                        .param("distance", "0")
+                        .with(user("test")))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void shouldFailBigRating() throws Exception {
+        mockMvc.perform(get(API_ENDPOINT)
+                        .param("customerRating", "6")
+                        .with(user("test")))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void shouldFailShortRating() throws Exception {
+        mockMvc.perform(get(API_ENDPOINT)
+                        .param("customerRating", "0")
+                        .with(user("test")))
+                .andExpect(status().isBadRequest());
     }
 
 }

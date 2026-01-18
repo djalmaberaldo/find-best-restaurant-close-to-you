@@ -1,16 +1,17 @@
-package com.assessment.matcher.service;
+package com.assessment.matcher.filters;
 
 
 import com.assessment.matcher.domain.dto.RequestDTO;
 import com.assessment.matcher.domain.dto.RestaurantDTO;
-import com.assessment.matcher.domain.parameters.FilterLogic;
+import org.springframework.stereotype.Component;
 import java.util.function.Predicate;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ParametersMapper {
+@Component
+public class ParametersFilter {
 
-    public static Predicate<RestaurantDTO> getValidFilters (RequestDTO requestDTO) {
+    public Predicate<RestaurantDTO> getValidFiltersFromRequest (RequestDTO requestDTO) {
 
         Predicate<RestaurantDTO> predicate = r -> true;
 

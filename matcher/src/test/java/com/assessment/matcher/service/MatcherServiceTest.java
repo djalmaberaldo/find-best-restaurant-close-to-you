@@ -4,6 +4,7 @@ import com.assessment.matcher.domain.dto.RequestDTO;
 import com.assessment.matcher.domain.dto.RestaurantDTO;
 import com.assessment.matcher.domain.jpa.Cuisine;
 import com.assessment.matcher.domain.jpa.Restaurant;
+import com.assessment.matcher.filters.ParametersFilter;
 import com.assessment.matcher.repository.RestaurantRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,12 +17,14 @@ import static org.mockito.Mockito.when;
 class MatcherServiceTest {
 
     private RestaurantRepository restaurantRepository;
+    private ParametersFilter parametersFilter;
     private MatcherService matcherService;
 
     @BeforeEach
     void setup() {
         restaurantRepository = Mockito.mock(RestaurantRepository.class);
-        matcherService = new MatcherService(restaurantRepository);
+        parametersFilter = Mockito.mock(ParametersFilter.class);
+        matcherService = new MatcherService(restaurantRepository, parametersFilter);
     }
 
     @Test
