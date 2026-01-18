@@ -26,18 +26,19 @@ class MatcherServiceTest {
 
     @Test
     void shouldReturnEmptyList() {
-        RequestDTO request = new RequestDTO();
 
         when(restaurantRepository.findAll()).thenReturn(List.of());
 
-        List<RestaurantDTO> result = matcherService.findBestRestaurants(request);
+        List<RestaurantDTO> result = matcherService.findBestRestaurants(RequestDTO.builder().build());
 
         assertEquals(0, result.size());
     }
 
     @Test
     void shouldSortByDistanceRatinPriceAndName() {
-        RequestDTO request = new RequestDTO("Delicious", null, null, null, null);
+        var mockRequest = RequestDTO.builder()
+                .restaurantName("Delicious")
+                .build();
         Cuisine mockCuisine = mock(Cuisine.class);
 
         when(restaurantRepository.findAll()).thenReturn(List.of(
@@ -49,7 +50,7 @@ class MatcherServiceTest {
                 new Restaurant(5L, "XXXXX", 10, 10, 5, mockCuisine)
         ));
 
-        List<RestaurantDTO> result = matcherService.findBestRestaurants(request);
+        List<RestaurantDTO> result = matcherService.findBestRestaurants(mockRequest);
 
         assertEquals(5, result.size());
         assertEquals(1, result.get(0).getDistance());

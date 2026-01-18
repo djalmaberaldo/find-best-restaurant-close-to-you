@@ -23,12 +23,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class MatcherControllerTest {
 
+    protected static final String API_ENDPOINT = "/api/restaurants";
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     void shouldReturnAllRestaurants() throws Exception {
-        mockMvc.perform(get("/api/restaurants").with(user("test")))
+        mockMvc.perform(get(API_ENDPOINT).with(user("test")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(5))
                 .andExpect(jsonPath("$[*].name").isNotEmpty())
@@ -40,7 +41,7 @@ class MatcherControllerTest {
 
     @Test
     void shouldReturnAllRestaurantsCuisineNameEquals() throws Exception {
-        mockMvc.perform(get("/api/restaurants")
+        mockMvc.perform(get(API_ENDPOINT)
                         .param("cuisineName", "Italian")
                         .with(user("test")))
                 .andExpect(status().isOk())
@@ -50,7 +51,7 @@ class MatcherControllerTest {
 
     @Test
     void shouldReturnAllRestaurantsPartialCuisineNameEquals() throws Exception {
-        mockMvc.perform(get("/api/restaurants")
+        mockMvc.perform(get(API_ENDPOINT)
                         .param("cuisineName", "Ital")
                         .with(user("test")))
                 .andExpect(status().isOk())
@@ -60,7 +61,7 @@ class MatcherControllerTest {
 
     @Test
     void shouldReturnAllRestaurantsPartialRestaurantNameEquals() throws Exception {
-        mockMvc.perform(get("/api/restaurants")
+        mockMvc.perform(get(API_ENDPOINT)
                         .param("restaurantName", "Delicious")
                         .with(user("test")))
                 .andExpect(status().isOk())
@@ -70,7 +71,7 @@ class MatcherControllerTest {
 
     @Test
     void shouldReturnAllRestaurantsDistanceMatching() throws Exception {
-        mockMvc.perform(get("/api/restaurants")
+        mockMvc.perform(get(API_ENDPOINT)
                         .param("distance", "3")
                         .with(user("test")))
                 .andExpect(status().isOk())
@@ -80,7 +81,7 @@ class MatcherControllerTest {
 
     @Test
     void shouldReturnAllRestaurantsPriceMatching() throws Exception {
-        mockMvc.perform(get("/api/restaurants")
+        mockMvc.perform(get(API_ENDPOINT)
                         .param("price", "20")
                         .with(user("test")))
                 .andExpect(status().isOk())
@@ -90,7 +91,7 @@ class MatcherControllerTest {
 
     @Test
     void shouldReturnAllRestaurantsPriceCuisineDistanceMatching() throws Exception {
-        mockMvc.perform(get("/api/restaurants")
+        mockMvc.perform(get(API_ENDPOINT)
                         .param("price", "20")
                         .param("distance", "3")
                         .param("cuisineName", "Italian")
@@ -104,7 +105,7 @@ class MatcherControllerTest {
 
     @Test
     void shouldReturnEmptyList() throws Exception {
-        mockMvc.perform(get("/api/restaurants")
+        mockMvc.perform(get(API_ENDPOINT)
                         .param("price", "20")
                         .param("distance", "3")
                         .param("cuisineName", "XXXXX")

@@ -5,10 +5,11 @@ import com.assessment.matcher.domain.dto.RestaurantDTO;
 import com.assessment.matcher.service.MatcherService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class MatcherController {
@@ -20,20 +21,10 @@ public class MatcherController {
     }
 
     @GetMapping("/restaurants")
-    public List<RestaurantDTO> find(
-            @RequestParam(required = false) String restaurantName,
-            @RequestParam(required = false) Integer distance,
-            @RequestParam(required = false) Integer price,
-            @RequestParam(required = false) Integer customerRating,
-            @RequestParam(required = false) String cuisineName
-    ) {
+    public List<RestaurantDTO> find(RequestDTO requestDTO){
+        log.info("Received request: {}", requestDTO);
 
-        return matcherService.findBestRestaurants(new RequestDTO(
-                restaurantName,
-                distance,
-                price,
-                customerRating,
-                cuisineName
-        ));
+
+        return matcherService.findBestRestaurants(requestDTO);
     }
 }
