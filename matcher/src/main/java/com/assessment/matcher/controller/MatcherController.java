@@ -27,7 +27,6 @@ public class MatcherController {
             @RequestParam(required = false) Integer customerRating,
             @RequestParam(required = false) String cuisineName
     ) {
-        System.out.println("HIT CONTROLLER");
 
         return matcherService.findBestRestaurants(new RequestDTO(
                 restaurantName,

@@ -1,17 +1,18 @@
 package com.assessment.matcher.domain.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.experimental.Accessors;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-@Data
-@Accessors(fluent = true)
+@Getter
 @AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class RequestDTO {
     private String restaurantName;
     private Integer distance;
     private Integer price;
     private Integer customerRating;
     private String cuisineName;
-
 }

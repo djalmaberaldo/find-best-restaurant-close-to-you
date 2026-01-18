@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.containsStringIgnoringCase;
 import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -65,6 +66,52 @@ class MatcherControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(5))
                 .andExpect(jsonPath("$[*].name", everyItem(containsStringIgnoringCase("Delicious"))));
+    }
+
+    @Test
+    void shouldReturnAllRestaurantsDistanceMatching() throws Exception {
+        mockMvc.perform(get("/api/restaurants")
+                        .param("distance", "3")
+                        .with(user("test")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(5))
+                .andExpect(jsonPath("$[*].distance", everyItem(lessThanOrEqualTo((3)))));
+    }
+
+    @Test
+    void shouldReturnAllRestaurantsPriceMatching() throws Exception {
+        mockMvc.perform(get("/api/restaurants")
+                        .param("price", "20")
+                        .with(user("test")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(5))
+                .andExpect(jsonPath("$[*].priceSinglePersonSpent", everyItem(lessThanOrEqualTo((20)))));
+    }
+
+    @Test
+    void shouldReturnAllRestaurantsPriceCuisineDistanceMatching() throws Exception {
+        mockMvc.perform(get("/api/restaurants")
+                        .param("price", "20")
+                        .param("distance", "3")
+                        .param("cuisineName", "Italian")
+                        .with(user("test")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(lessThanOrEqualTo(5)))
+                .andExpect(jsonPath("$[*].priceSinglePersonSpent", everyItem(lessThanOrEqualTo((20)))))
+                .andExpect(jsonPath("$[*].distance", everyItem(lessThanOrEqualTo((3)))))
+                .andExpect(jsonPath("$[*].cuisineName", everyItem(containsString("Italian"))));
+    }
+
+    @Test
+    void shouldReturnEmptyList() throws Exception {
+        mockMvc.perform(get("/api/restaurants")
+                        .param("price", "20")
+                        .param("distance", "3")
+                        .param("cuisineName", "XXXXX")
+                        .with(user("test")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(lessThanOrEqualTo(0)));
+
     }
 
 }
