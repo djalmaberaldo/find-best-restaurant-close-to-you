@@ -1,31 +1,40 @@
 package com.assessment.matcher.controller;
 
+import com.assessment.matcher.domain.dto.RequestDTO;
 import com.assessment.matcher.domain.dto.RestaurantDTO;
-import com.assessment.matcher.domain.mapper.RestaurantMapper;
-import com.assessment.matcher.repository.RestaurantRepository;
+import com.assessment.matcher.service.MatcherService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class MatcherController {
 
-    public final RestaurantRepository restaurantRepository;
+    public final MatcherService matcherService;
 
-    public MatcherController(RestaurantRepository restaurantRepository) {
-        this.restaurantRepository = restaurantRepository;
+    public MatcherController(MatcherService matcherService) {
+        this.matcherService = matcherService;
     }
 
-    @GetMapping("/top-rated")
-    public List<RestaurantDTO> find() {
-        return restaurantRepository.findAll().stream()
-                .map(RestaurantMapper::toDTO)
-                .sorted(Comparator.comparing(RestaurantDTO::customerRating).reversed())
-                .limit(5)
-                .toList();
+    @GetMapping("/restaurants")
+    public List<RestaurantDTO> find(
+            @RequestParam(required = false) String restaurantName,
+            @RequestParam(required = false) Integer distance,
+            @RequestParam(required = false) Integer price,
+            @RequestParam(required = false) Integer customerRating,
+            @RequestParam(required = false) String cuisineName
+    ) {
+        System.out.println("HIT CONTROLLER");
+
+        return matcherService.findBestRestaurants(new RequestDTO(
+                restaurantName,
+                distance,
+                price,
+                customerRating,
+                cuisineName
+        ));
     }
 }

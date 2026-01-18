@@ -1,14 +1,16 @@
 package com.assessment.matcher.domain.dto;
 
-import lombok.Builder;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Builder
-public record RestaurantDTO(
-        String name,
-        String cuisineName,
-        Integer priceSinglePersonSpent,
-        Integer customerRating,
-        Integer distance
-) {
+@Data
+@AllArgsConstructor
+public class RestaurantDTO {
+
+    private String name;
+    private String cuisineName;
+    private Integer priceSinglePersonSpent;
+    private Integer customerRating;
+    private Integer distance;
 }
