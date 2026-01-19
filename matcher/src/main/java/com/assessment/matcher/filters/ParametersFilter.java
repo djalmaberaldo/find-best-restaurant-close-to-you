@@ -2,7 +2,7 @@ package com.assessment.matcher.filters;
 
 
 import com.assessment.matcher.domain.dto.RequestDTO;
-import com.assessment.matcher.domain.dto.RestaurantDTO;
+import com.assessment.matcher.domain.dto.ResponseDTO;
 import org.springframework.stereotype.Component;
 import java.util.function.Predicate;
 import lombok.extern.slf4j.Slf4j;
@@ -11,9 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class ParametersFilter {
 
-    public Predicate<RestaurantDTO> getValidFiltersFromRequest (RequestDTO requestDTO) {
+    public Predicate<ResponseDTO> getValidFiltersFromRequest (RequestDTO requestDTO) {
 
-        Predicate<RestaurantDTO> predicate = r -> true;
+        Predicate<ResponseDTO> predicate = r -> true;
 
         if (requestDTO.getRestaurantName() != null) {
             predicate = predicate.and(FilterLogic.NAME.build(requestDTO.getRestaurantName()));

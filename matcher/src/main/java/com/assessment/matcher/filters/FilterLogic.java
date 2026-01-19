@@ -1,6 +1,6 @@
 package com.assessment.matcher.filters;
 
-import com.assessment.matcher.domain.dto.RestaurantDTO;
+import com.assessment.matcher.domain.dto.ResponseDTO;
 import java.util.Comparator;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
@@ -10,8 +10,8 @@ import lombok.Getter;
 public enum FilterLogic {
 
     NAME(
-            (restaurant,value) -> restaurant.getName().toLowerCase().contains((String.valueOf(value).toLowerCase())),
-            (r1, r2) -> r1.getName().compareTo(r2.getName())),
+            (restaurant,value) -> restaurant.getRestaurantName().toLowerCase().contains((String.valueOf(value).toLowerCase())),
+            (r1, r2) -> r1.getRestaurantName().compareTo(r2.getRestaurantName())),
     CUISINE(
             (restaurant,value) -> restaurant.getCuisineName().contains((String) value),
             (r1, r2) -> r1.getCuisineName().compareTo(r2.getCuisineName())),
@@ -25,19 +25,19 @@ public enum FilterLogic {
             (restaurant,value) -> restaurant.getDistance() <=  (int)value,
             (r1, r2) -> r1.getDistance().compareTo(r2.getDistance()));
 
-    private final BiPredicate<RestaurantDTO, Object> predicate;
-    private final Comparator<RestaurantDTO> comparator;
+    private final BiPredicate<ResponseDTO, Object> predicate;
+    private final Comparator<ResponseDTO> comparator;
 
-    FilterLogic(BiPredicate<RestaurantDTO, Object> predicate, Comparator<RestaurantDTO> comparator) {
+    FilterLogic(BiPredicate<ResponseDTO, Object> predicate, Comparator<ResponseDTO> comparator) {
         this.predicate = predicate;
         this.comparator = comparator;
     }
 
-    public Predicate<RestaurantDTO> build(String value) {
+    public Predicate<ResponseDTO> build(String value) {
         return r -> predicate.test(r, value);
     }
 
-    public Predicate<RestaurantDTO> build(Integer value) {
+    public Predicate<ResponseDTO> build(Integer value) {
         return r -> predicate.test(r, value);
     }
 

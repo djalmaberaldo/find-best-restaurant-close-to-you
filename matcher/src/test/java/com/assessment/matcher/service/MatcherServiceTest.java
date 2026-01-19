@@ -1,7 +1,7 @@
 package com.assessment.matcher.service;
 
 import com.assessment.matcher.domain.dto.RequestDTO;
-import com.assessment.matcher.domain.dto.RestaurantDTO;
+import com.assessment.matcher.domain.dto.ResponseDTO;
 import com.assessment.matcher.domain.entity.Cuisine;
 import com.assessment.matcher.domain.entity.Restaurant;
 import com.assessment.matcher.filters.ParametersFilter;
@@ -32,7 +32,7 @@ class MatcherServiceTest {
 
         when(restaurantRepository.findAll()).thenReturn(List.of());
 
-        List<RestaurantDTO> result = matcherService.findBestRestaurants(RequestDTO.builder().build());
+        List<ResponseDTO> result = matcherService.findBestRestaurants(RequestDTO.builder().build());
 
         assertEquals(0, result.size());
     }
@@ -53,25 +53,25 @@ class MatcherServiceTest {
                 new Restaurant(5L, "XXXXX", 10, 10, 5, mockCuisine)
         ));
 
-        List<RestaurantDTO> result = matcherService.findBestRestaurants(mockRequest);
+        List<ResponseDTO> result = matcherService.findBestRestaurants(mockRequest);
 
         assertEquals(5, result.size());
         assertEquals(1, result.get(0).getDistance());
         assertEquals(3, result.get(0).getCustomerRating());
-        assertEquals("DeliciousA", result.get(0).getName());
+        assertEquals("DeliciousA", result.get(0).getRestaurantName());
 
         assertEquals(4, result.get(1).getCustomerRating());
         assertEquals(20, result.get(1).getPriceSinglePersonSpent());
-        assertEquals("DeliciousC", result.get(1).getName());
+        assertEquals("DeliciousC", result.get(1).getRestaurantName());
 
         assertEquals(30, result.get(2).getPriceSinglePersonSpent());
-        assertEquals("DeliciousB", result.get(2).getName());
+        assertEquals("DeliciousB", result.get(2).getRestaurantName());
 
         assertEquals(10, result.get(3).getPriceSinglePersonSpent());
-        assertEquals("DeliciousD", result.get(3).getName());
+        assertEquals("DeliciousD", result.get(3).getRestaurantName());
 
         assertEquals(10, result.get(4).getPriceSinglePersonSpent());
-        assertEquals("DeliciousE", result.get(4).getName());
+        assertEquals("DeliciousE", result.get(4).getRestaurantName());
 
 
     }

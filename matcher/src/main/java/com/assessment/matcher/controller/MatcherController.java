@@ -1,7 +1,7 @@
 package com.assessment.matcher.controller;
 
 import com.assessment.matcher.domain.dto.RequestDTO;
-import com.assessment.matcher.domain.dto.RestaurantDTO;
+import com.assessment.matcher.domain.dto.ResponseDTO;
 import com.assessment.matcher.service.MatcherService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +22,7 @@ public class MatcherController {
     }
 
     @GetMapping("/restaurants")
-    public List<RestaurantDTO> find(@Valid RequestDTO requestDTO){
+    public List<ResponseDTO> find(@Valid RequestDTO requestDTO){
         log.info("Received request: {}", requestDTO);
 
         return matcherService.findBestRestaurants(requestDTO);

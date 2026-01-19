@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class RestaurantDTO {
-    private String name;
+public class ResponseDTO {
+    private String restaurantName;
     private String cuisineName;
     private Integer priceSinglePersonSpent;
     private Integer customerRating;

@@ -33,7 +33,7 @@ class MatcherControllerTest {
         mockMvc.perform(get(API_ENDPOINT).with(user("test")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(5))
-                .andExpect(jsonPath("$[*].name").isNotEmpty())
+                .andExpect(jsonPath("$[*].restaurantName").isNotEmpty())
                 .andExpect(jsonPath("$[*].cuisineName").isNotEmpty())
                 .andExpect(jsonPath("$[*].priceSinglePersonSpent").exists())
                 .andExpect(jsonPath("$[*].distance").exists())
@@ -43,8 +43,7 @@ class MatcherControllerTest {
     @Test
     void shouldReturnAllRestaurantsCuisineNameEquals() throws Exception {
         mockMvc.perform(get(API_ENDPOINT)
-                        .param("cuisineName", "Italian")
-                        .with(user("test")))
+                        .param("cuisineName", "Italian"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(5))
                 .andExpect(jsonPath("$[*].cuisineName", everyItem(containsString("Italian"))));
@@ -53,8 +52,7 @@ class MatcherControllerTest {
     @Test
     void shouldReturnAllRestaurantsPartialCuisineNameEquals() throws Exception {
         mockMvc.perform(get(API_ENDPOINT)
-                        .param("cuisineName", "Ital")
-                        .with(user("test")))
+                        .param("cuisineName", "Ital"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(5))
                 .andExpect(jsonPath("$[*].cuisineName", everyItem(containsString("Italian"))));
@@ -63,8 +61,7 @@ class MatcherControllerTest {
     @Test
     void shouldReturnAllRestaurantsPartialRestaurantNameEquals() throws Exception {
         mockMvc.perform(get(API_ENDPOINT)
-                        .param("restaurantName", "Delicious")
-                        .with(user("test")))
+                        .param("restaurantName", "Delicious"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(5))
                 .andExpect(jsonPath("$[*].name", everyItem(containsStringIgnoringCase("Delicious"))));
@@ -73,8 +70,7 @@ class MatcherControllerTest {
     @Test
     void shouldReturnAllRestaurantsDistanceMatching() throws Exception {
         mockMvc.perform(get(API_ENDPOINT)
-                        .param("distance", "3")
-                        .with(user("test")))
+                        .param("distance", "3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(5))
                 .andExpect(jsonPath("$[*].distance", everyItem(lessThanOrEqualTo((3)))));
@@ -83,8 +79,7 @@ class MatcherControllerTest {
     @Test
     void shouldReturnAllRestaurantsPriceMatching() throws Exception {
         mockMvc.perform(get(API_ENDPOINT)
-                        .param("price", "20")
-                        .with(user("test")))
+                        .param("price", "20"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(5))
                 .andExpect(jsonPath("$[*].priceSinglePersonSpent", everyItem(lessThanOrEqualTo((20)))));
@@ -95,8 +90,7 @@ class MatcherControllerTest {
         mockMvc.perform(get(API_ENDPOINT)
                         .param("price", "20")
                         .param("distance", "3")
-                        .param("cuisineName", "Italian")
-                        .with(user("test")))
+                        .param("cuisineName", "Italian"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(lessThanOrEqualTo(5)))
                 .andExpect(jsonPath("$[*].priceSinglePersonSpent", everyItem(lessThanOrEqualTo((20)))))
@@ -109,8 +103,7 @@ class MatcherControllerTest {
         mockMvc.perform(get(API_ENDPOINT)
                         .param("price", "20")
                         .param("distance", "3")
-                        .param("cuisineName", "XXXXX")
-                        .with(user("test")))
+                        .param("cuisineName", "XXXXX"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(lessThanOrEqualTo(0)));
     }
@@ -118,32 +111,28 @@ class MatcherControllerTest {
     @Test
     void shouldFailBigDistance() throws Exception {
         mockMvc.perform(get(API_ENDPOINT)
-                        .param("distance", "30")
-                        .with(user("test")))
+                        .param("distance", "30"))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     void shouldFailShortDistance() throws Exception {
         mockMvc.perform(get(API_ENDPOINT)
-                        .param("distance", "0")
-                        .with(user("test")))
+                        .param("distance", "0"))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     void shouldFailBigRating() throws Exception {
         mockMvc.perform(get(API_ENDPOINT)
-                        .param("customerRating", "6")
-                        .with(user("test")))
+                        .param("customerRating", "6"))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     void shouldFailShortRating() throws Exception {
         mockMvc.perform(get(API_ENDPOINT)
-                        .param("customerRating", "0")
-                        .with(user("test")))
+                        .param("customerRating", "0"))
                 .andExpect(status().isBadRequest());
     }
 
