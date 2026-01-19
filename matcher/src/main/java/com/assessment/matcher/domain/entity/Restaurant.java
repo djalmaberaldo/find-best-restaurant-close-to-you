@@ -1,4 +1,4 @@
-package com.assessment.matcher.domain.jpa;
+package com.assessment.matcher.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

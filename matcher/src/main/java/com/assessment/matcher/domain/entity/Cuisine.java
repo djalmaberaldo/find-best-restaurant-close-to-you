@@ -1,4 +1,4 @@
-package com.assessment.matcher.domain.jpa;
+package com.assessment.matcher.domain.entity;
 
 import java.util.ArrayList;
 import java.util.List;

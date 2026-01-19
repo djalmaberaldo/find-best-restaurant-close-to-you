@@ -2,8 +2,8 @@ package com.assessment.matcher.service;
 
 import com.assessment.matcher.domain.dto.RequestDTO;
 import com.assessment.matcher.domain.dto.RestaurantDTO;
-import com.assessment.matcher.domain.jpa.Cuisine;
-import com.assessment.matcher.domain.jpa.Restaurant;
+import com.assessment.matcher.domain.entity.Cuisine;
+import com.assessment.matcher.domain.entity.Restaurant;
 import com.assessment.matcher.filters.ParametersFilter;
 import com.assessment.matcher.repository.RestaurantRepository;
 import org.junit.jupiter.api.BeforeEach;
