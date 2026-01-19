@@ -3,15 +3,14 @@ package com.assessment.matcher.filters;
 
 import com.assessment.matcher.domain.dto.RequestDTO;
 import com.assessment.matcher.domain.dto.ResponseDTO;
-import org.springframework.stereotype.Component;
+
 import java.util.function.Predicate;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
 public class ParametersFilter {
 
-    public Predicate<ResponseDTO> getValidFiltersFromRequest (RequestDTO requestDTO) {
+    public static Predicate<ResponseDTO> getValidFiltersFromRequest (RequestDTO requestDTO) {
 
         Predicate<ResponseDTO> predicate = r -> true;
 

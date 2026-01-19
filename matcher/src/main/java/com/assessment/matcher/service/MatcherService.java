@@ -19,21 +19,18 @@ import static com.assessment.matcher.filters.FilterLogic.PRICE;
 public class MatcherService {
 
     public final RestaurantRepository restaurantRepository;
-    public final ParametersFilter parametersFilter;
 
     public static int MAX_RESTAURANTS = 5;
 
-    public MatcherService(RestaurantRepository restaurantRepository,
-                          ParametersFilter parametersFilter) {
+    public MatcherService(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
-        this.parametersFilter = parametersFilter;
     }
 
     public List<ResponseDTO> findBestRestaurants(RequestDTO requestDTO) {
 
         List<ResponseDTO> result = restaurantRepository.findAll().stream()
                 .map(RestaurantMapper::toDTO)
-                .filter(parametersFilter.getValidFiltersFromRequest(requestDTO))
+                .filter(ParametersFilter.getValidFiltersFromRequest(requestDTO))
                 .sorted(FilterLogic.DISTANCE.getComparator()
                         .thenComparing(CUSTOMER_RATING.getComparator())
                         .thenComparing(PRICE.getComparator())

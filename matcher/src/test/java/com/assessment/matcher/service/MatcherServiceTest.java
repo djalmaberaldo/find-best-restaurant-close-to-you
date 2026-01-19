@@ -4,7 +4,6 @@ import com.assessment.matcher.domain.dto.RequestDTO;
 import com.assessment.matcher.domain.dto.ResponseDTO;
 import com.assessment.matcher.domain.entity.Cuisine;
 import com.assessment.matcher.domain.entity.Restaurant;
-import com.assessment.matcher.filters.ParametersFilter;
 import com.assessment.matcher.repository.RestaurantRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,19 +16,16 @@ import static org.mockito.Mockito.when;
 class MatcherServiceTest {
 
     private RestaurantRepository restaurantRepository;
-    private ParametersFilter parametersFilter;
     private MatcherService matcherService;
 
     @BeforeEach
     void setup() {
         restaurantRepository = Mockito.mock(RestaurantRepository.class);
-        parametersFilter = Mockito.mock(ParametersFilter.class);
-        matcherService = new MatcherService(restaurantRepository, parametersFilter);
+        matcherService = new MatcherService(restaurantRepository);
     }
 
     @Test
     void shouldReturnEmptyList() {
-
         when(restaurantRepository.findAll()).thenReturn(List.of());
 
         List<ResponseDTO> result = matcherService.findBestRestaurants(RequestDTO.builder().build());
@@ -72,7 +68,5 @@ class MatcherServiceTest {
 
         assertEquals(10, result.get(4).getPriceSinglePersonSpent());
         assertEquals("DeliciousE", result.get(4).getRestaurantName());
-
-
     }
 }
