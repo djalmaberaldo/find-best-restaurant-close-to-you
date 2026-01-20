@@ -146,13 +146,7 @@ mvn clean spring-boot:run
 or it's possible to run the jar file:
 
 ```
-mvn clean package
-```
-
-then
-
-```
-curl "http://localhost:8080/api/restaurants?cuisineName=Italian&distance=5&price=40&customerRating=3"
+java -jar target/matcher-*.jar
 ```
 -------------------------------
 ## 🧪 API Testing with shell script
