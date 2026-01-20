@@ -154,7 +154,18 @@ then
 ```
 curl "http://localhost:8080/api/restaurants?cuisineName=Italian&distance=5&price=40&customerRating=3"
 ```
+-------------------------------
+## 🧪 API Testing with shell script
 
+Make sure application is running, then:
+
+```
+chmod +x api-scripts/test-api.sh || true
+./api-scripts/test-api.sh
+
+```
+
+--------------------------------
 ## 🧪 API Testing with Postman
 
 This project includes a ready-to-use Postman collection to validate the API behavior using different filter and ranking scenarios.
@@ -162,7 +173,7 @@ This project includes a ready-to-use Postman collection to validate the API beha
 You can find it under:
 
 ```
-/src/test/resources/expected-responses
+api-testing/expected-responses
 ```
 
 Make sure application is running.
