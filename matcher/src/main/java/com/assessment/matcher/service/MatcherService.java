@@ -37,6 +37,8 @@ public class MatcherService {
                         .thenComparing(PRICE.getComparator())
                         .thenComparing(NAME.getComparator());
 
+        log.info("Ranking was set");
+
         List<ResponseDTO> result = restaurantRepository.findAll().stream()
                 .map(RestaurantMapper::toDTO)
                 .filter(filters)
