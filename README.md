@@ -98,6 +98,7 @@ Current ranking priority:
 ```
 This ensures the best matches appear at the top of the result list while preserving deterministic ordering.
 
+----------
 ## Data Initialization
 
 On startup:
@@ -126,6 +127,7 @@ Why Liquibase?
 
 This makes the application ready to run without extra database configuration.
 
+---------------
 
 ## How to Run Backend
 
@@ -139,6 +141,19 @@ Run:
 ```bash
 mvn clean spring-boot:run
 ```` 
+-----
+
+or it's possible to run the jar file:
+
+```
+mvn clean package
+```
+
+then
+
+```
+curl "http://localhost:8080/api/restaurants?cuisineName=Italian&distance=5&price=40&customerRating=3"
+```
 
 ## 🧪 API Testing with Postman
 
@@ -150,6 +165,8 @@ You can find it under:
 /src/test/resources/expected-responses
 ```
 
+Make sure application is running.
+
 The collection focuses on the single available endpoint and exercises it with multiple combinations of query parameters (name, cuisine, distance, price, rating, etc.).
 
 What it Covers
@@ -160,3 +177,32 @@ What it Covers
 - Response structure validation.
 
 Simply import the collection into Postman and run the requests to explore the API behavior.
+
+It should look like this:
+
+![postman.png](postman.png)
+
+---------------------------
+## API testing with curl commands
+
+Base Request
+
+```
+curl "http://localhost:8080/api/restaurants"
+```
+
+Filter by Cuisine
+```
+curl "http://localhost:8080/api/restaurants?cuisineName=Italian"
+```
+
+Filter by Distance and Price
+```
+curl "http://localhost:8080/api/restaurants?distance=5&price=30"
+```
+
+Combine Multiple Filters
+```
+curl "http://localhost:8080/api/restaurants?cuisineName=Italian&distance=5&price=40&customerRating=3"
+```
+
