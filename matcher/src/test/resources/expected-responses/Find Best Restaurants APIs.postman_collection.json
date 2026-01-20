@@ -1,7 +1,7 @@
 {
   "info": {
     "_postman_id": "3594da9a-38a9-47bb-8c67-f812a9ba9a6c",
-    "name": "Integration Testing",
+    "name": "Find Best Restaurants APIs",
     "description": "# About this collection\n\nPostman allows you to test your APIs using simple Javascript code. You can evaluate your response body, headers, cookies, and more using the [ChaiJS BDD](https://www.chaijs.com/api/bdd/) syntax.\n\nThis collection guides you through the process of setting up an integration test to ensure that all individual components of an API function together seamlessly.\n\nThe API under test in this collection includes three endpoints for registering and receiving a token, accessing your unique generated name, and unregistering a token:\n\n- POST `/register`\n- POST `/unregister`\n- GET `/my-name`\n    \n\nBy setting up requests in the order of the operation, we can test the flow of data to and from the endpoints and ensure they work together as expected. We also verify that the data persists between requests on the back end.\n\n## **Using this collection**\n\n**Step 1:** Check out the requests' documentation to learn more about -\n\n- what each request is meant to do.\n- the tests we've added against each one.\n    \n\n**Step 2:** Run this collection by clicking on \"Run\".\n\n<img src=\"https://content.pstmn.io/84019b0f-69c8-4c5f-98b9-2c90a6f9a0b1/Y29sbGVjdGlvbi1ydW5uZXItYnV0dG9uLmpwZWc=\" width=\"266\" height=\"103\">\n\n**Step 3:** To customize this collection, replace the request URLs with your API endpoints and add or edit the tests if needed.\n\n## Resources\n\n[Scripting in Postman](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/)\n\n[Test script examples](https://learning.postman.com/docs/writing-scripts/script-references/test-examples/)\n\n[Postman Sandbox API reference](https://learning.postman.com/docs/sending-requests/grpc/postman-sandbox-api/#writing-assertions)\n\n[Using the Collection Runner](https://learning.postman.com/docs/collections/running-collections/intro-to-collection-runs/)",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "13485390"
@@ -152,7 +152,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:8080/api/restaurants?distance=10",
+          "raw": "http://localhost:8080/api/restaurants",
           "protocol": "http",
           "host": [
             "localhost"
@@ -161,12 +161,6 @@
           "path": [
             "api",
             "restaurants"
-          ],
-          "query": [
-            {
-              "key": "distance",
-              "value": "10"
-            }
           ]
         }
       },
@@ -260,7 +254,7 @@
       "response": []
     },
     {
-      "name": "Not valida low price",
+      "name": "Not valid low price",
       "event": [
         {
           "listen": "test",
@@ -558,6 +552,107 @@
             {
               "key": "restaurantName",
               "value": "Delicious"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Price, Distance and Rating",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Sorted by distance, rating, price, name\", () => {\r",
+              "\r",
+              "    \r",
+              "    for (let i = 1; i < data.length; i++) {\r",
+              "        const prev = data[i - 1];\r",
+              "        const curr = data[i];\r",
+              "\r",
+              "        if (prev.distance !== curr.distance) {\r",
+              "            pm.expect(curr.distance).to.be.at.least(prev.distance);\r",
+              "        } \r",
+              "        else if (prev.customerRating !== curr.customerRating) {\r",
+              "            pm.expect(curr.customerRating).to.be.at.most(prev.customerRating);\r",
+              "        } \r",
+              "        else if (prev.priceSinglePersonSpent !== curr.priceSinglePersonSpent) {\r",
+              "            pm.expect(curr.priceSinglePersonSpent).to.be.at.least(prev.priceSinglePersonSpent);\r",
+              "        } \r",
+              "        else {\r",
+              "            pm.expect(curr.restaurantName.localeCompare(prev.restaurantName))\r",
+              "              .to.be.at.least(0);\r",
+              "        }\r",
+              "    }\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Each item has required fields and match filters\", () => {\r",
+              "    const data = pm.response.json();\r",
+              "\r",
+              "    data.forEach(r => {\r",
+              "        pm.expect(r).to.have.property(\"restaurantName\");\r",
+              "        pm.expect(r).to.have.property(\"cuisineName\");\r",
+              "        pm.expect(r).to.have.property(\"priceSinglePersonSpent\");\r",
+              "        pm.expect(r).to.have.property(\"customerRating\");\r",
+              "        pm.expect(r).to.have.property(\"distance\");\r",
+              "\r",
+              "        pm.expect(r.distance).to.be.lessThanOrEqual(8);\r",
+              "        pm.expect(r.priceSinglePersonSpent).to.be.lessThanOrEqual(30);\r",
+              "        pm.expect(r.customerRating).to.be.greaterThanOrEqual(3)\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "pm.test(\"should match filters\", () => {\r",
+              "    const data = pm.response.json();\r",
+              "\r",
+              "    data.forEach(r => {\r",
+              "        pm.expect(r.distance).to.be.lessThanOrEqual(8);\r",
+              "        pm.expect(r.priceSinglePersonSpent).to.be.lessThanOrEqual(30);\r",
+              "        pm.expect(r.customerRating).to.be.greaterThanOrEqual(3)\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "\r",
+              "\r",
+              "\r",
+              "\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/restaurants?distance=8&price=30&customerRating=3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "restaurants"
+          ],
+          "query": [
+            {
+              "key": "distance",
+              "value": "8"
+            },
+            {
+              "key": "price",
+              "value": "30"
+            },
+            {
+              "key": "customerRating",
+              "value": "3"
             }
           ]
         }

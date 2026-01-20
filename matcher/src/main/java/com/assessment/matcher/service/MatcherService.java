@@ -50,6 +50,7 @@ public class MatcherService {
             return Collections.emptyList();
         }
 
+        log.info("Returning best results");
         return result.subList(0, Math.min(result.size(), MAX_RESTAURANTS));
     }
 }
