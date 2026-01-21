@@ -146,17 +146,9 @@ mvn clean spring-boot:run
 or it's possible to run the jar file:
 
 ```
+cd matcher || exit 1
+./mvnw clean package -DskipTests
 java -jar target/matcher-*.jar
-```
--------------------------------
-## 🧪 API Testing with shell script
-
-Make sure application is running, then:
-
-```
-chmod +x api-scripts/test-api.sh || true
-./api-scripts/test-api.sh
-
 ```
 
 --------------------------------
