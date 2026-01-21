@@ -147,7 +147,7 @@ or it's possible to run the jar file:
 
 ```
 cd matcher || exit 1
-./mvnw clean package -DskipTests
+mvn clean package -DskipTests
 java -jar target/matcher-*.jar
 ```
 
